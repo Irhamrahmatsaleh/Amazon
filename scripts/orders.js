@@ -12,5 +12,9 @@ function orderBy(order, options) {
   });
 }
 
+function getOrder(options) {
+  return options.order || 'products'
+}
+
 
 export default orderBy;
