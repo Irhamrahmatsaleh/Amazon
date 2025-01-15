@@ -1,5 +1,6 @@
 import { cart } from '../data/cart.js';
 import { products } from '../data/products.js';
+import { formatCurrnecy } from './utils/money.js';
 
 let cartSummaryHTML = '';
 
@@ -14,7 +15,6 @@ cart.forEach((cartItem) => {
     }
   });
 
-  console.log(matchingProduct);
   cartSummaryHTML += `
   <div class="cart-item-container">
       <div class="delivery-date">
@@ -22,14 +22,14 @@ cart.forEach((cartItem) => {
       </div>
 
       <div class="cart-item-details-grid">
-        <img class="product-image"${matchingProduct.image}">
+        <img class="product-image" src="${matchingProduct.image}">
 
         <div class="cart-item-details">
           <div class="product-name">
             ${matchingProduct.name}
           </div>
           <div class="product-price">
-            $${matchingProduct.priceCents / 100}
+            $${formatCurrnecy(matchingProduct.priceCents)}
           </div>
           <div class="product-quantity">
             <span>
