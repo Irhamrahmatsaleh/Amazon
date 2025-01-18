@@ -1,7 +1,10 @@
 // tracking-order.js
 
+import { cart } from '../data/cart.js';
+import { products } from '../data/products.js';
+
 // Function to track order status
-function trackOrder(orderId) {
+export function trackOrder(orderId) {
   // Simulate an API call to get order status
   const orderStatus = getOrderStatusFromAPI(orderId);
 
@@ -22,11 +25,31 @@ function getOrderStatusFromAPI(orderId) {
 
 // Function to display order status
 function displayOrderStatus(orderStatus) {
-  console.log(`Order ID: ${orderStatus.orderId}`);
-  console.log(`Status: ${orderStatus.status}`);
-  console.log(`Estimated Delivery: ${orderStatus.estimatedDelivery}`);
+  const orderStatusContainer = document.querySelector('.js-order-status');
+  orderStatusContainer.innerHTML = `
+    <div>Order ID: ${orderStatus.orderId}</div>
+    <div>Status: ${orderStatus.status}</div>
+    <div>Estimated Delivery: ${orderStatus.estimatedDelivery}</div>
+  `;
 }
 
-// Example usage
-const orderId = '12345';
-trackOrder(orderId);
+// Function to display order summary
+export function displayOrderSummary() {
+  let orderSummaryHTML = '';
+
+  cart.forEach((cartItem) => {
+    const product = products.find((product) => product.id === cartItem.productId);
+    orderSummaryHTML += `
+      <div class="order-item">
+        <img src="${product.image}" alt="${product.name}" class="order-item-image">
+        <div class="order-item-details">
+          <div class="order-item-name">${product.name}</div>
+          <div class="order-item-quantity">Quantity: ${cartItem.quantity}</div>
+          <div class="order-item-price">$${(product.priceCents / 100).toFixed(2)}</div>
+        </div>
+      </div>
+    `;
+  });
+
+  document.querySelector('.js-order-summary').innerHTML = orderSummaryHTML;
+}
