@@ -2,6 +2,8 @@ import { cart, removeFromCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrnecy } from './utils/money.js';
 
+hello();
+
 let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
